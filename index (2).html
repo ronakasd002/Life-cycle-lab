@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LifeCycle Lab - Software Engineering Toolkit</title>
+<style>
+:root{--bg:#0c1b2a;--card:#11263a;--ln:#26435e;--am:#ffb454;--tl:#5eead4;--t:#e8eef5;--m:#8ea3b8;--ok:#4ade80;--no:#f87171}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--t);line-height:1.5;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/36px 36px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/36px 36px}
+body:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(420px circle at var(--x,70%) var(--y,20%),rgba(255,180,84,.10),transparent 70%)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:20px 16px 50px}
+.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;align-items:center;padding:34px 0 20px}
+.hi{font-size:1.1rem;color:var(--am);letter-spacing:.08em}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.4rem,9.5vw,4.4rem);line-height:1;margin:4px 0 10px;font-weight:700}
+h1 span{display:inline-block;animation:rise .7s both}
+.motto{font-family:Georgia,serif;font-style:italic;font-size:1.35rem;color:var(--tl)}
+.hero p.l{color:var(--m);margin-top:12px;max-width:46ch}
+.orb{position:relative;width:min(290px,72vw);aspect-ratio:1;margin:0 auto}
+.ring,.sat{position:absolute;inset:15%;border-radius:50%}
+.ring{border:1.5px dashed #3d6586;animation:spin 50s linear infinite}
+.sat{animation:spin 9s linear infinite}
+.sat:after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--am)}
+.mid{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:Georgia,serif;color:var(--m);font-size:.95rem;pointer-events:none}
+.nd{position:absolute;background:var(--card);border:1px solid var(--ln);color:var(--t);border-radius:99px;padding:6px 12px;font-size:.8rem;cursor:pointer;transition:border-color .2s}
+.nd:hover{border-color:var(--am)}.nd b{color:var(--am);margin-right:4px}
+.n1{top:0;left:50%;margin-left:-45px}.n2{right:0;top:50%;margin-top:-16px}.n3{bottom:0;left:50%;margin-left:-45px}.n4{left:0;top:50%;margin-top:-16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.why{border-left:3px solid var(--am);background:var(--card);padding:14px 16px;border-radius:0 10px 10px 0;margin:10px 0 26px;color:#c9d6e3}
+.why b{color:var(--am)}
+nav{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--ln);margin-bottom:16px}
+nav button{background:none;border:0;color:var(--m);padding:10px 14px;cursor:pointer;font-size:.95rem;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
+nav button small{display:block;font-size:.7rem;opacity:.8}
+nav button:hover{color:var(--t)}nav button.on{color:var(--am);border-color:var(--am)}
+.panel{display:none}.panel.on{display:block;animation:rise .4s}
+h2{font-family:Georgia,serif;font-size:1.5rem;margin-bottom:4px}
+.d{color:var(--m);margin-bottom:12px;font-size:.92rem}
+.row,.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+.panel button{background:var(--am);color:#1a1205;border:0;border-radius:6px;padding:9px 14px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .2s}
+.panel button:hover:not(:disabled){transform:translateY(-2px)}
+.panel button:disabled{opacity:.4;cursor:not-allowed}
+.panel button.alt,.panel button.chip{background:transparent;color:var(--t);border:1px solid var(--ln);font-weight:400}
+.panel button.chip.on{border-color:var(--am);color:var(--am)}
+.bar{height:8px;background:#08131f;border-radius:6px;overflow:hidden;flex:1}
+.bar i{display:block;height:100%;width:100%;background:var(--tl);transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.bar i.hi{background:var(--am)}
+.st{display:flex;gap:12px;align-items:center;padding:9px 12px;border:1px solid var(--ln);border-radius:10px;margin:7px 0;opacity:.5;transition:opacity .35s,transform .35s,border-color .35s}
+.st b{width:28px;height:28px;border-radius:50%;background:#08131f;display:grid;place-items:center;flex:none;font-size:.85rem}
+.st strong{display:block}.st small{color:var(--m)}
+.st.done{opacity:1;border-color:var(--ok)}.st.done b{background:var(--ok);color:#042}
+.st.now{opacity:1;border-color:var(--am);transform:translateX(8px)}.st.now b{background:var(--am);color:#1a1205}
+.sum{display:grid;gap:6px;margin-top:10px;animation:rise .5s}.sum div{background:#08131f;padding:9px 12px;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:10px}
+label{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--m)}label.w{grid-column:1/-1}
+input,select,textarea{background:#08131f;color:var(--t);border:1px solid var(--ln);border-radius:6px;padding:9px;font:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--am);outline-offset:0}
+pre{margin-top:12px;background:#06101a;border:1px solid var(--ln);border-radius:8px;padding:12px;white-space:pre-wrap;font:.78rem/1.5 ui-monospace,Consolas,monospace;color:#c8f7e4;max-height:400px;overflow:auto}
+.err{color:var(--no);min-height:1.3em;margin-top:6px;font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+.stat{background:#08131f;border:1px solid var(--ln);border-radius:10px;padding:12px;animation:rise .5s both}
+.stat span{display:block;color:var(--m);font-size:.78rem}.stat b{font:700 1.4rem ui-monospace,Consolas,monospace;color:var(--am)}
+.brow{display:flex;gap:10px;align-items:center;margin:7px 0;font-size:.85rem}.brow span{width:105px}.brow em{width:70px;text-align:right;color:var(--m);font-style:normal}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--ln);text-align:left}
+tr.in{animation:rise .35s both}.ps{color:var(--ok);font-weight:700}.fl{color:var(--no);font-weight:700}
+#bs p{margin-top:8px;font-weight:600}
+.lc{margin:6px 0 28px}.lcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.lcn{background:var(--card);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;text-align:left;color:var(--t);cursor:pointer;font:inherit;transition:border-color .4s}
+.lcn b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#08131f;margin-right:8px;font-size:.8rem;transition:background .4s}
+.lcn small{display:block;color:var(--m);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lcn.ok{border-color:var(--ok)}.lcn.ok b{background:var(--ok);color:#042}
+.lcbtn{background:var(--am);color:#1a1205;border:0;border-radius:6px;padding:9px 14px;font-weight:600;cursor:pointer}.lcbtn:disabled{opacity:.45;cursor:not-allowed}
+footer{text-align:center;color:var(--m);margin-top:30px;font-size:.85rem}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style></head><body>
+<main>
+<section class="hero">
+<div><div class="hi">SOFTWARE ENGINEERING TOOLKIT</div><h1 id="ttl" aria-label="LifeCycle Lab">LifeCycle Lab</h1>
+<div class="motto">Plan it. Estimate it. Test it.</div>
+<p class="l">Every software project has a life cycle: it is modelled, specified, estimated and tested. LifeCycle Lab lets you run those four stages yourself, one after another, and then gives you a report of the whole journey.</p></div>
+<div class="orb"><div class="ring"></div><div class="sat"></div><div class="mid">one project<br>four stages</div>
+<button class="nd n1" data-p="p1"><b>1</b>Model</button><button class="nd n2" data-p="p2"><b>2</b>Specify</button><button class="nd n3" data-p="p3"><b>3</b>Estimate</button><button class="nd n4" data-p="p4"><b>4</b>Test</button></div>
+</section>
+<div class="why rv"><b>Why I built this.</b> Our lab list had twelve separate experiments. I wanted to see what happens when four of them work together as one tool, in the same order a real project uses them. That journey is the life cycle the name talks about, and the tracker below follows it. The Java version runs in the terminal; this page is the same idea, made for the browser.</div>
+
+<div class="lc rv"><h2>Your project's life cycle</h2><p class="d">Finish each stage in the lab. When all four are done, you can generate a full life cycle report.</p><div class="bar"><i id="lcf"></i></div><div class="lcs" id="lcs"></div><button class="lcbtn" id="rg" disabled>Finish all 4 stages to unlock the report</button><div id="rep"></div></div>
+<div id="tools" class="rv">
+<nav id="tabs">
+<button data-p="p1" class="on">SDLC Models<small>EXP-1</small></button><button data-p="p2">SRS Writer<small>EXP-3</small></button><button data-p="p3">Cost Estimate<small>EXP-5</small></button><button data-p="p4">Input Testing<small>EXP-9</small></button>
+</nav>
+
+<section id="p1" class="panel on"><h2>SDLC model simulator</h2><p class="d">Pick a model and step through its phases, or let the lab suggest one.</p>
+<div class="row"><label>Requirements<select id="q1"><option value="0">Fixed and clear</option><option value="1">Likely to change</option><option value="2">Not clear yet</option></select></label><label>Delivery<select id="q2"><option value="0">All at the end</option><option value="1">Early and often</option></select></label><button class="alt" id="rcm">Suggest a model</button></div><p class="d" id="rco"></p>
+<div class="chips" id="chips"></div><div class="row"><div class="bar"><i id="pb"></i></div></div>
+<div id="steps"></div>
+<div class="row"><button id="nx">Next step</button><button id="pl" class="alt">Auto-play</button><button id="rs" class="alt">Reset</button></div><div id="sum"></div></section>
+
+<section id="p2" class="panel"><h2>SRS writer (IEEE format)</h2><p class="d">Fill in the form, generate the document, download it.</p>
+<div class="grid">
+<label>Project name<input id="sp" value="Library Book Tracker"></label><label>Author / team<input id="sa" value="Your Name"></label>
+<label>Purpose<input id="su" value="Track book issue and return in a small library"></label><label>Scope<input id="ss" value="Search, issue, return, fine calculation"></label>
+<label>Users<input id="sx" value="Students, librarian"></label><label>Performance<input id="n1" value="Search results within 2 seconds"></label>
+<label>Security<input id="n2" value="Password login for staff"></label><label>Usability<input id="n3" value="Simple screens, no training needed"></label>
+<label>Reliability<input id="n4" value="99% uptime in library hours"></label>
+<label class="w">Functional requirements (one per line, max 10)<textarea id="sf" rows="4">Librarian can add and remove books
+Student can search books by title or author
+Librarian can issue a book to a student
+System calculates fine for late returns</textarea></label></div>
+<p class="err" id="se"></p>
+<div class="row"><button id="sg">Generate SRS</button><button id="sd" class="alt" disabled>Download .txt</button></div><pre id="so" hidden></pre></section>
+
+<section id="p3" class="panel"><h2>COCOMO cost estimate</h2><p class="d">Estimate the effort, time and cost of your project.</p>
+<div class="grid"><label>Size in KLOC (1 to 500)<input id="ck" type="number" value="32"></label>
+<label>Mode<select id="cm"><option value="0">Organic</option><option value="1">Semi-detached</option><option value="2">Embedded</option></select></label>
+<label>Monthly salary per person, Rs (1000 to 500000)<input id="cs" type="number" value="30000"></label></div>
+<button id="cc">Calculate</button><p class="err" id="ce"></p><div class="stats" id="cr"></div><div id="cb"></div></section>
+
+<section id="p4" class="panel"><h2>Input testing (BVA + ECP)</h2><p class="d">Boundary Value Analysis and Equivalence Class Partitioning, run live.</p>
+<div class="row"><button id="tg">Run marks-to-grade tests (0 to 100)</button></div>
+<div class="grid"><label>Custom range: minimum<input id="tmin" type="number" value="1"></label><label>Custom range: maximum<input id="tmax" type="number" value="500"></label></div>
+<div class="row"><button id="tc">Run custom range tests</button></div><p class="err" id="te"></p>
+<div class="sc"><table id="bt"></table></div><div id="bs"></div></section>
+</div>
+<footer>LifeCycle Lab &middot; MCA Software Engineering lab project &middot; made by Your Name</footer>
+</main>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+/* title letters rise one by one */
+$('#ttl').innerHTML=[...'LifeCycle Lab'].map((c,i)=>`<span style="animation-delay:${i*55}ms">${c==' '?'&nbsp;':c}</span>`).join('');
+/* soft light follows the pointer (only on devices with a mouse) */
+if(matchMedia('(hover:hover)').matches&&!RM){let q=0;addEventListener('pointermove',e=>{if(q)return;q=requestAnimationFrame(()=>{q=0;document.body.style.setProperty('--x',e.clientX+'px');document.body.style.setProperty('--y',e.clientY+'px')})},{passive:true})}
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});$$('.rv').forEach(e=>io.observe(e));
+/* tabs */
+function go(id){$$('#tabs button,.panel').forEach(x=>x.classList.remove('on'));$('#tabs [data-p='+id+']').classList.add('on');$('#'+id).classList.add('on')}
+$$('#tabs button').forEach(b=>b.onclick=()=>go(b.dataset.p));
+$$('.nd').forEach(b=>b.onclick=()=>{go(b.dataset.p);$('#tools').scrollIntoView({behavior:'smooth'})});
+const flush=f=>requestAnimationFrame(()=>requestAnimationFrame(f));
+function count(el,to,dec){if(RM){el.textContent=to.toLocaleString('en-IN',{maximumFractionDigits:dec});return}let s=null;const f=t=>{s??=t;const p=Math.min((t-s)/800,1);el.textContent=(to*p).toLocaleString('en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec});if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+/* life cycle tracker: fills up as each stage is completed */
+const S={},ST=[['p1','Model','model'],['p2','Specify','srs'],['p3','Estimate','est'],['p4','Test','test']],esc=x=>String(x).replace(/[&<>]/g,c=>'&#'+c.charCodeAt(0)+';');
+function lc(){const n=ST.filter(x=>S[x[2]]).length,b=$('#rg');
+$('#lcs').innerHTML=ST.map((x,i)=>`<button class="lcn ${S[x[2]]?'ok':''}" data-p="${x[0]}"><b>${S[x[2]]?'&#10003;':i+1}</b>${x[1]}<small>${S[x[2]]?esc(S[x[2]].t):'not done yet'}</small></button>`).join('');
+$('#lcf').style.transform='scaleX('+n/4+')';$('#lcf').className=n==4?'hi':'';
+$$('#lcs .lcn').forEach(x=>x.onclick=()=>{go(x.dataset.p);$('#tools').scrollIntoView({behavior:'smooth'})});
+b.disabled=n<4;b.textContent=n<4?'Finish all 4 stages to unlock the report ('+n+'/4)':'Generate life cycle report'}
+$('#rg').onclick=()=>{const a=S.model,b=S.srs,c=S.est,t=S.test;
+const r=['LIFECYCLE LAB - PROJECT LIFE CYCLE REPORT','============================================','Date: '+new Date().toISOString().slice(0,10),'','STAGE 1 - MODEL','  Lifecycle model studied : '+a.name,'','STAGE 2 - SPECIFY','  Project                 : '+b.name,'  Functional requirements : '+b.n,'  Intended users          : '+b.users,'','STAGE 3 - ESTIMATE','  Size   : '+c.k+' KLOC ('+c.mode+' mode)','  Effort : '+c.E.toFixed(1)+' person-months','  Time   : '+c.T.toFixed(1)+' months','  Cost   : Rs '+Math.round(c.cost).toLocaleString('en-IN'),'','STAGE 4 - TEST','  Result : '+t.p+' of '+t.n+' tests passed ('+Math.round(t.p/t.n*100)+'%)','','The project was modelled, specified, estimated and tested: one full pass through the early life cycle.'].join('\n');
+const pr=document.createElement('pre'),d=document.createElement('button');pr.textContent=r;d.textContent='Download report';d.className='lcbtn';d.style.marginTop='10px';
+d.onclick=()=>{const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([r],{type:'text/plain'}));l.download='LifeCycleLab_Report.txt';l.click();URL.revokeObjectURL(l.href)};
+$('#rep').replaceChildren(pr,d)};
+lc();
+/* SDLC */
+const loop=(n,l,a)=>{const o=[];for(let i=1;i<=n;i++)a.forEach(x=>o.push([l+' '+i+' - '+x[0],x[1]]));return o};
+const M={
+Waterfall:{s:[['Requirement Analysis','Customer needs are collected and written down.'],['System Design','Architecture, database and screens are planned.'],['Implementation','Developers write the code.'],['Testing','The whole system is checked against requirements.'],['Deployment','Software is handed over to users.'],['Maintenance','Bugs are fixed and updates are made.']],best:'Fixed, clear requirements; small projects',pro:'Simple, easy to manage, well documented',con:'No going back; late working software'},
+Incremental:{s:loop(3,'Increment',[['Analysis','Requirements for this part only.'],['Design','Fits with the earlier parts.'],['Coding','This part is built.'],['Testing','Tested with earlier parts.'],['Delivery','Released to the customer.']]),best:'Projects that need early partial delivery',pro:'Early working software, easier testing',con:'Needs good overall planning'},
+Prototyping:{s:[['Gather requirements','Only the main idea is collected.'],['Quick design','A rough design is prepared.'],...loop(2,'Round',[['Build prototype','A quick working sample.'],['Customer feedback','The customer tries it and suggests changes.']]),['Final product','Built from the approved prototype.'],['Test and deploy','Tested and released.']],best:'Unclear requirements',pro:'Users see results early',con:'Can take longer; prototype may be mistaken for the product'},
+Agile:{s:[['Product Backlog','The Product Owner lists everything needed.'],...loop(3,'Sprint',[['Planning','Pick backlog items.'],['Development','Build, with daily stand-ups.'],['Testing','Test what was built.'],['Review','Demo the working increment.'],['Retrospective','Decide what to improve.']])],best:'Changing requirements, fast feedback',pro:'Flexible, customer always involved',con:'Needs disciplined teams, light documentation'}};
+let cur='Waterfall',idx=0,tm=null;
+function chips(){$('#chips').innerHTML=Object.keys(M).map(k=>`<button class="chip ${k==cur?'on':''}" data-k="${k}">${k}</button>`).join('');$$('.chip').forEach(c=>c.onclick=()=>{cur=c.dataset.k;stop();chips();build()})}
+function build(){idx=0;$('#steps').innerHTML=M[cur].s.map((x,i)=>`<div class="st"><b>${i+1}</b><div><strong>${x[0]}</strong><small>${x[1]}</small></div></div>`).join('');upd()}
+function upd(){const m=M[cur],n=m.s.length;$$('#steps .st').forEach((e,i)=>{e.className='st'+(i<idx?' done':i==idx?' now':'');e.firstChild.innerHTML=i<idx?'&#10003;':i+1});
+$('#pb').style.transform='scaleX('+idx/n+')';$('#nx').disabled=idx>=n;if(idx>=n){S.model={t:cur,name:cur};lc()}
+$('#sum').innerHTML=idx>=n?`<div class="sum"><div><b>Best for:</b> ${m.best}</div><div><b>Advantages:</b> ${m.pro}</div><div><b>Disadvantages:</b> ${m.con}</div></div>`:'';
+const c=$('#steps .now');if(c)c.scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})}
+function nextS(){if(idx<M[cur].s.length){idx++;upd()}else stop()}
+function stop(){clearInterval(tm);tm=null;$('#pl').textContent='Auto-play'}
+$('#nx').onclick=nextS;$('#rs').onclick=()=>{stop();idx=0;upd()};
+$('#pl').onclick=()=>{if(tm){stop();return}if(idx>=M[cur].s.length)idx=0;$('#pl').textContent='Pause';tm=setInterval(nextS,900);nextS()};
+chips();build();
+/* model suggestion */
+$('#rcm').onclick=()=>{const a=+$('#q1').value,b=+$('#q2').value;
+const r=a==2?['Prototyping','unclear requirements are best discovered with a quick sample']:a==1?['Agile','changing requirements need short sprints and constant feedback']:b?['Incremental','requirements are stable but you want early deliveries']:['Waterfall','requirements are fixed and delivery can wait until the end'];
+cur=r[0];stop();chips();build();$('#rco').textContent='Suggested: '+r[0]+' - '+r[1]+'.'};
+/* SRS */
+let doc='';
+$('#sg').onclick=()=>{const v=i=>$('#'+i).value.trim(),fr=v('sf').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,10);
+if(!v('sp')||!fr.length){$('#se').textContent='Please enter a project name and at least one functional requirement.';return}$('#se').textContent='';
+doc=['SOFTWARE REQUIREMENTS SPECIFICATION (IEEE format)','==================================================','Project : '+v('sp'),'Author  : '+v('sa'),'Date    : '+new Date().toISOString().slice(0,10),'Version : 1.0','','1. INTRODUCTION','   1.1 Purpose','       '+v('su'),'   1.2 Scope','       '+v('ss'),'   1.3 Definitions','       SRS - Software Requirements Specification','   1.4 References','       IEEE Std 830','','2. OVERALL DESCRIPTION','   2.1 Product Perspective','       '+v('sp')+' is a standalone software system.','   2.2 User Characteristics','       Intended users: '+v('sx'),'   2.3 Assumptions','       Users have basic computer knowledge.','','3. SPECIFIC REQUIREMENTS','   3.1 Functional Requirements',...fr.map((x,i)=>'       FR-'+(i+1)+': '+x),'   3.2 Non-Functional Requirements','       NFR-1 Performance : '+v('n1'),'       NFR-2 Security    : '+v('n2'),'       NFR-3 Usability   : '+v('n3'),'       NFR-4 Reliability : '+v('n4'),'','4. APPENDIX','       (Add diagrams or extra notes here.)'].join('\n');
+S.srs={t:v('sp'),name:v('sp'),n:fr.length,users:v('sx')};lc();const o=$('#so');o.hidden=false;$('#sd').disabled=true;
+if(RM){o.textContent=doc;$('#sd').disabled=false;return}
+let i=0;const f=()=>{i=Math.min(i+25,doc.length);o.textContent=doc.slice(0,i);o.scrollTop=o.scrollHeight;i<doc.length?requestAnimationFrame(f):$('#sd').disabled=false};requestAnimationFrame(f)};
+$('#sd').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([doc],{type:'text/plain'}));a.download='SRS_'+$('#sp').value.replace(/[^a-zA-Z0-9]/g,'_')+'.txt';a.click();URL.revokeObjectURL(a.href)};
+/* COCOMO */
+const K=[[2.4,1.05,2.5,.38],[3,1.12,2.5,.35],[3.6,1.2,2.5,.32]],N=['Organic','Semi-detached','Embedded'];
+$('#cc').onclick=()=>{const k=+$('#ck').value,m=+$('#cm').value,s=+$('#cs').value,e=$('#ce');
+if(!(k>=1&&k<=500)){e.textContent='Size must be between 1 and 500 KLOC.';return}
+if(!(s>=1000&&s<=500000)){e.textContent='Salary must be between 1,000 and 500,000.';return}
+e.textContent='';const ef=K.map(c=>c[0]*Math.pow(k,c[1])),E=ef[m],T=K[m][2]*Math.pow(E,K[m][3]);S.est={t:E.toFixed(0)+' person-months',E,T,k,mode:N[m],cost:E*s};lc();
+$('#cr').innerHTML=[['Effort (person-months)','e1'],['Time (months)','e2'],['Average team size','e3'],['Cost (Rs)','e4']].map((x,i)=>`<div class="stat" style="animation-delay:${i*90}ms"><span>${x[0]}</span><b id="${x[1]}">0</b></div>`).join('');
+count($('#e1'),E,1);count($('#e2'),T,1);count($('#e3'),E/T,1);count($('#e4'),E*s,0);
+const mx=Math.max(...ef);$('#cb').innerHTML='<p class="d">Effort for the same size in each mode:</p>'+ef.map((x,i)=>`<div class="brow"><span>${N[i]}</span><div class="bar"><i class="${i==m?'hi':''}" data-w="${x/mx}"></i></div><em>${x.toFixed(0)} PM</em></div>`).join('');
+flush(()=>$$('#cb i').forEach(i=>i.style.transform='scaleX('+i.dataset.w+')'))};
+/* Black-box */
+const grade=m=>m<0||m>100?'Invalid':m>=90?'A+':m>=80?'A':m>=70?'B':m>=60?'C':m>=50?'D':m>=40?'E':'F';
+function runT(rows){let p=0,h='<tr><th>Technique</th><th>Input</th><th>Expected</th><th>Actual</th><th>Result</th></tr>';
+rows.forEach((r,i)=>{const ok=r[3]==r[2];p+=ok;h+=`<tr class="in" style="animation-delay:${i*45}ms"><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td class="${ok?'ps':'fl'}">${ok?'PASS':'FAIL'}</td></tr>`});
+$('#bt').innerHTML=h;$('#bs').innerHTML=`<div class="row"><div class="bar"><i id="bf" class="${p==rows.length?'':'hi'}"></i></div></div><p>${p} of ${rows.length} tests passed - ${p==rows.length?'ALL TESTS PASSED':'SOME TESTS FAILED'}</p>`;
+flush(()=>$('#bf').style.transform='scaleX('+p/rows.length+')');S.test={t:p+' of '+rows.length+' passed',p,n:rows.length};lc()}
+const G=[['ECP',-50,'Invalid'],['BVA',-1,'Invalid'],['BVA',0,'F'],['BVA',1,'F'],['ECP',25,'F'],['BVA',39,'F'],['BVA',40,'E'],['ECP',45,'E'],['BVA',49,'E'],['BVA',50,'D'],['ECP',55,'D'],['BVA',59,'D'],['BVA',60,'C'],['ECP',65,'C'],['BVA',69,'C'],['BVA',70,'B'],['ECP',75,'B'],['BVA',79,'B'],['BVA',80,'A'],['ECP',85,'A'],['BVA',89,'A'],['BVA',90,'A+'],['ECP',95,'A+'],['BVA',99,'A+'],['BVA',100,'A+'],['BVA',101,'Invalid'],['ECP',150,'Invalid']];
+$('#tg').onclick=()=>{$('#te').textContent='';runT(G.map(r=>[r[0],r[1],r[2],grade(r[1])]))};
+$('#tc').onclick=()=>{const a=+$('#tmin').value,b=+$('#tmax').value;
+if(!Number.isInteger(a)||!Number.isInteger(b)||b<a+3){$('#te').textContent='Enter whole numbers; maximum must be at least minimum + 3.';return}
+$('#te').textContent='';const v=x=>x>=a&&x<=b?'VALID':'INVALID';
+runT([['BVA',a-1,'INVALID'],['BVA',a,'VALID'],['BVA',a+1,'VALID'],['BVA',b-1,'VALID'],['BVA',b,'VALID'],['BVA',b+1,'INVALID'],['ECP',a-10,'INVALID'],['ECP',Math.floor((a+b)/2),'VALID'],['ECP',b+10,'INVALID']].map(r=>[...r,v(r[1])]))};
+</script></body></html>
