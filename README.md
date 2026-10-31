@@ -4,7 +4,7 @@
 
 LifeCycle Lab is an integrated software engineering toolkit that brings four early stages of a software project into one application: choosing a lifecycle model, writing the requirements, estimating cost, and validating inputs through testing.
 
-**Live demo:https://ronakasd002.github.io/Life-cycle-lab/**
+**Live demo:https://https://ronakasd002.github.io/Life-cycle-lab/**
 
 ## Flow of the project
 
