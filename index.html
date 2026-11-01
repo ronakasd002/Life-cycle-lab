@@ -2,93 +2,124 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LifeCycle Lab - Software Engineering Toolkit</title>
 <style>
-:root{--bg:#0c1b2a;--card:#11263a;--ln:#26435e;--am:#ffb454;--tl:#5eead4;--t:#e8eef5;--m:#8ea3b8;--ok:#4ade80;--no:#f87171}
+:root{--bg:#070f1a;--cd:#0e1d2e;--ln:#23415e;--am:#ffb454;--tl:#5eead4;--cr:#ff7a90;--t:#eaf1f8;--m:#8fa6bd;--ok:#4ade80;--no:#f87171}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
 body{font-family:system-ui,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--t);line-height:1.5;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/36px 36px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/36px 36px}
-body:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(420px circle at var(--x,70%) var(--y,20%),rgba(255,180,84,.10),transparent 70%)}
-main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:20px 16px 50px}
-.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;align-items:center;padding:34px 0 20px}
-.hi{font-size:1.1rem;color:var(--am);letter-spacing:.08em}
-h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.4rem,9.5vw,4.4rem);line-height:1;margin:4px 0 10px;font-weight:700}
-h1 span{display:inline-block;animation:rise .7s both}
-.motto{font-family:Georgia,serif;font-style:italic;font-size:1.35rem;color:var(--tl)}
-.hero p.l{color:var(--m);margin-top:12px;max-width:46ch}
-.orb{position:relative;width:min(290px,72vw);aspect-ratio:1;margin:0 auto}
-.ring,.sat{position:absolute;inset:15%;border-radius:50%}
-.ring{border:1.5px dashed #3d6586;animation:spin 50s linear infinite}
-.sat{animation:spin 9s linear infinite}
-.sat:after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--am)}
-.mid{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:Georgia,serif;color:var(--m);font-size:.95rem;pointer-events:none}
-.nd{position:absolute;background:var(--card);border:1px solid var(--ln);color:var(--t);border-radius:99px;padding:6px 12px;font-size:.8rem;cursor:pointer;transition:border-color .2s}
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict}
+.fx:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px) 0 0/38px 38px,linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px) 0 0/38px 38px}
+.bl{position:absolute;width:62vmax;height:62vmax;border-radius:50%;will-change:transform;animation:dr 26s ease-in-out infinite alternate}
+.b1{left:-20vmax;top:-22vmax;background:radial-gradient(circle,rgba(255,180,84,.20),transparent 65%)}
+.b2{right:-24vmax;top:20vmax;background:radial-gradient(circle,rgba(94,234,212,.17),transparent 65%);animation-duration:32s;animation-direction:alternate-reverse}
+.b3{left:10vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(255,122,144,.14),transparent 65%);animation-duration:38s}
+@keyframes dr{to{transform:translate3d(8vmax,6vmax,0) scale(1.15)}}
+.dt{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:var(--tl);opacity:0;animation:fl 14s linear infinite}
+@keyframes fl{10%{opacity:.7}to{transform:translate3d(var(--dx),-105vh,0);opacity:0}}
+#spot{position:fixed;left:0;top:0;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,84,.12),transparent 65%);pointer-events:none;z-index:0;will-change:transform;opacity:0}
+#spr{position:fixed;top:0;left:0;right:0;height:3px;z-index:9;background:linear-gradient(90deg,var(--am),var(--tl));transform:scaleX(0);transform-origin:left}
+main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:22px 16px 50px}
+.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;align-items:center;padding:34px 0 18px}
+.hero>*{animation:rise .8s both}.hero>:nth-child(2){animation-delay:.2s}
+.hi{font-size:.85rem;color:var(--am);letter-spacing:.2em}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.3rem,9vw,4.2rem);line-height:1.08;margin:6px 0 10px;padding-bottom:.08em;background:linear-gradient(100deg,#fff 20%,var(--am) 55%,var(--tl));-webkit-background-clip:text;background-clip:text;color:transparent;animation:wp 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes wp{from{clip-path:inset(0 100% 0 0);opacity:0}to{clip-path:inset(0 0 0 0)}}
+.motto{font-family:Georgia,serif;font-style:italic;font-size:1.3rem;color:var(--tl)}
+.l{color:var(--m);margin-top:12px;max-width:46ch}
+.orb{position:relative;width:min(300px,76vw);aspect-ratio:1;margin:0 auto}
+.core{position:absolute;inset:33%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd9a0,var(--am) 55%,#c47a1c);display:grid;place-items:center;color:#1a1205;font:700 .72rem/1.2 Georgia,serif;text-align:center;animation:pl 3s ease-in-out infinite}
+@keyframes pl{50%{transform:scale(1.07)}}
+.rp{position:absolute;inset:33%;border-radius:50%;border:2px solid var(--am);opacity:0;animation:rp 3.2s ease-out infinite}
+.rp+.rp{animation-delay:1.6s}
+@keyframes rp{from{transform:scale(1);opacity:.6}to{transform:scale(2.7);opacity:0}}
+.ob{position:absolute;inset:8%;border-radius:50%;border:1.5px dashed #365a7c;animation:spin 36s linear infinite}
+.ob:after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--tl)}
+.nd{position:absolute;width:86px;margin:-15px 0 0 -43px;background:var(--cd);border:1px solid var(--ln);color:var(--t);border-radius:99px;padding:6px 0;font-size:.78rem;cursor:pointer;animation:spin 36s linear infinite reverse}
 .nd:hover{border-color:var(--am)}.nd b{color:var(--am);margin-right:4px}
-.n1{top:0;left:50%;margin-left:-45px}.n2{right:0;top:50%;margin-top:-16px}.n3{bottom:0;left:50%;margin-left:-45px}.n4{left:0;top:50%;margin-top:-16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}}
-.why{border-left:3px solid var(--am);background:var(--card);padding:14px 16px;border-radius:0 10px 10px 0;margin:10px 0 26px;color:#c9d6e3}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.why{border-left:3px solid var(--am);background:var(--cd);padding:14px 16px;border-radius:0 12px 12px 0;margin:10px 0 24px;color:#c9d6e3}
 .why b{color:var(--am)}
-nav{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--ln);margin-bottom:16px}
-nav button{background:none;border:0;color:var(--m);padding:10px 14px;cursor:pointer;font-size:.95rem;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
-nav button small{display:block;font-size:.7rem;opacity:.8}
-nav button:hover{color:var(--t)}nav button.on{color:var(--am);border-color:var(--am)}
-.panel{display:none}.panel.on{display:block;animation:rise .4s}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
 h2{font-family:Georgia,serif;font-size:1.5rem;margin-bottom:4px}
-.d{color:var(--m);margin-bottom:12px;font-size:.92rem}
-.row,.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
-.panel button{background:var(--am);color:#1a1205;border:0;border-radius:6px;padding:9px 14px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .2s}
-.panel button:hover:not(:disabled){transform:translateY(-2px)}
-.panel button:disabled{opacity:.4;cursor:not-allowed}
+.d{color:var(--m);margin:6px 0;font-size:.92rem}
+.bar{height:8px;background:#06101a;border-radius:6px;overflow:hidden;flex:1}
+.bar i{display:block;height:100%;width:100%;background:var(--tl);transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.bar i.hi{background:linear-gradient(90deg,var(--am),var(--cr))}
+.lc{margin:6px 0 26px}
+.lcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.tl{transition:transform .25s ease-out,border-color .3s}
+.lcn{background:var(--cd);border:1px solid var(--ln);border-radius:12px;padding:10px 12px;text-align:left;color:var(--t);cursor:pointer;font:inherit}
+.lcn b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#06101a;margin-right:8px;font-size:.8rem;transition:background .4s}
+.lcn small{display:block;color:var(--m);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lcn.ok{border-color:var(--ok)}.lcn.ok b{background:var(--ok);color:#042}
+button{font:inherit}
+.lcbtn,.panel button{position:relative;overflow:hidden;background:var(--am);color:#1a1205;border:0;border-radius:8px;padding:9px 15px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .2s}
+.lcbtn:disabled,.panel button:disabled{opacity:.45;cursor:not-allowed}
+.panel button:hover:not(:disabled),.lcbtn:hover:not(:disabled){transform:translateY(-2px)}
 .panel button.alt,.panel button.chip{background:transparent;color:var(--t);border:1px solid var(--ln);font-weight:400}
 .panel button.chip.on{border-color:var(--am);color:var(--am)}
-.bar{height:8px;background:#08131f;border-radius:6px;overflow:hidden;flex:1}
-.bar i{display:block;height:100%;width:100%;background:var(--tl);transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.bar i.hi{background:var(--am)}
-.st{display:flex;gap:12px;align-items:center;padding:9px 12px;border:1px solid var(--ln);border-radius:10px;margin:7px 0;opacity:.5;transition:opacity .35s,transform .35s,border-color .35s}
-.st b{width:28px;height:28px;border-radius:50%;background:#08131f;display:grid;place-items:center;flex:none;font-size:.85rem}
+.rip{position:absolute;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rpl .6s ease-out;pointer-events:none}
+@keyframes rpl{to{transform:scale(6);opacity:0}}
+nav{position:relative;display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--ln);margin-bottom:16px}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;background:none;border:0;color:var(--m);padding:10px 14px;cursor:pointer;font-size:.92rem;transition:color .2s}
+nav button small{display:block;font-size:.7rem;opacity:.8}
+nav button:hover{color:var(--t)}nav button.on{color:var(--am)}
+#ind{position:absolute;left:0;bottom:0;height:2px;width:100px;background:var(--am);transform-origin:left;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.panel{display:none;background:linear-gradient(180deg,#10243a,#0c1a2a);border:1px solid var(--ln);border-radius:16px;padding:20px}
+.panel.on{display:block;animation:rise .45s}
+.row,.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+.row label{flex:1;min-width:150px}
+.st{display:flex;gap:12px;align-items:center;padding:9px 12px;border:1px solid var(--ln);border-radius:12px;margin:7px 0;opacity:.5;transition:opacity .35s,transform .35s,border-color .35s}
+.st b{position:relative;width:28px;height:28px;border-radius:50%;background:#06101a;display:grid;place-items:center;flex:none;font-size:.85rem}
 .st strong{display:block}.st small{color:var(--m)}
 .st.done{opacity:1;border-color:var(--ok)}.st.done b{background:var(--ok);color:#042}
-.st.now{opacity:1;border-color:var(--am);transform:translateX(8px)}.st.now b{background:var(--am);color:#1a1205}
-.sum{display:grid;gap:6px;margin-top:10px;animation:rise .5s}.sum div{background:#08131f;padding:9px 12px;border-radius:8px}
+.st.now{opacity:1;border-color:var(--am);transform:translateX(8px)}.st.now b{background:var(--am);color:#1a1205;animation:pl 1.2s ease-in-out infinite}
+.sum{display:grid;gap:6px;margin-top:10px;animation:rise .5s}.sum div{background:#06101a;padding:9px 12px;border-radius:8px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:10px}
 label{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--m)}label.w{grid-column:1/-1}
-input,select,textarea{background:#08131f;color:var(--t);border:1px solid var(--ln);border-radius:6px;padding:9px;font:inherit}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--am);outline-offset:0}
-pre{margin-top:12px;background:#06101a;border:1px solid var(--ln);border-radius:8px;padding:12px;white-space:pre-wrap;font:.78rem/1.5 ui-monospace,Consolas,monospace;color:#c8f7e4;max-height:400px;overflow:auto}
+input,select,textarea{background:#06101a;color:var(--t);border:1px solid var(--ln);border-radius:8px;padding:9px;font:inherit;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--am)}
+pre{margin-top:12px;background:#050c14;border:1px solid var(--ln);border-radius:10px;padding:12px;white-space:pre-wrap;font:.78rem/1.5 ui-monospace,Consolas,monospace;color:#c8f7e4;max-height:400px;overflow:auto}
 .err{color:var(--no);min-height:1.3em;margin-top:6px;font-size:.9rem}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
-.stat{background:#08131f;border:1px solid var(--ln);border-radius:10px;padding:12px;animation:rise .5s both}
-.stat span{display:block;color:var(--m);font-size:.78rem}.stat b{font:700 1.4rem ui-monospace,Consolas,monospace;color:var(--am)}
-.brow{display:flex;gap:10px;align-items:center;margin:7px 0;font-size:.85rem}.brow span{width:105px}.brow em{width:70px;text-align:right;color:var(--m);font-style:normal}
+.mcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+.mc{background:#06101a;border:1px solid var(--ln);border-radius:14px;padding:14px;animation:rise .6s both}
+.mc.sel{border-color:var(--am);box-shadow:0 0 0 1px var(--am)}
+.mc h3{font-family:Georgia,serif;margin-bottom:6px}
+.mc em{font:600 .65rem system-ui;background:var(--am);color:#1a1205;border-radius:99px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.mc p{display:flex;align-items:baseline;gap:6px;padding:5px 0;border-bottom:1px dashed var(--ln)}
+.mc p span{flex:1;color:var(--m);font-size:.82rem}.mc b{font:700 1.05rem ui-monospace,Consolas,monospace;color:var(--am)}.mc small{color:var(--m);font-size:.7rem}
+.brow{display:flex;gap:10px;align-items:center;margin:7px 0;font-size:.85rem}.brow span{width:100px}.brow em{width:120px;text-align:right;color:var(--m);font-style:normal}
 .sc{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px}
 th,td{padding:7px 8px;border-bottom:1px solid var(--ln);text-align:left}
 tr.in{animation:rise .35s both}.ps{color:var(--ok);font-weight:700}.fl{color:var(--no);font-weight:700}
 #bs p{margin-top:8px;font-weight:600}
-.lc{margin:6px 0 28px}.lcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
-.lcn{background:var(--card);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;text-align:left;color:var(--t);cursor:pointer;font:inherit;transition:border-color .4s}
-.lcn b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#08131f;margin-right:8px;font-size:.8rem;transition:background .4s}
-.lcn small{display:block;color:var(--m);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lcn.ok{border-color:var(--ok)}.lcn.ok b{background:var(--ok);color:#042}
-.lcbtn{background:var(--am);color:#1a1205;border:0;border-radius:6px;padding:9px 14px;font-weight:600;cursor:pointer}.lcbtn:disabled{opacity:.45;cursor:not-allowed}
+.cf{position:fixed;left:50%;top:45%;width:8px;height:12px;z-index:10;pointer-events:none;animation:cf 1.4s ease-out forwards}
+@keyframes cf{to{transform:translate3d(var(--x),var(--y),0) rotate(var(--r));opacity:0}}
 footer{text-align:center;color:var(--m);margin-top:30px;font-size:.85rem}
-.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media(max-width:700px){.b3,.rp+.rp{display:none}.hero{padding-top:14px}.brow span{width:80px}.brow em{width:90px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}h1{clip-path:none}}
 </style></head><body>
+<div class="fx"><i class="bl b1"></i><i class="bl b2"></i><i class="bl b3"></i><div id="dts"></div></div>
+<div id="spot"></div><div id="spr"></div>
 <main>
 <section class="hero">
-<div><div class="hi">SOFTWARE ENGINEERING TOOLKIT</div><h1 id="ttl" aria-label="LifeCycle Lab">LifeCycle Lab</h1>
+<div><div class="hi">SOFTWARE ENGINEERING TOOLKIT</div><h1>LifeCycle Lab</h1>
 <div class="motto">Plan it. Estimate it. Test it.</div>
 <p class="l">Every software project has a life cycle: it is modelled, specified, estimated and tested. LifeCycle Lab lets you run those four stages yourself, one after another, and then gives you a report of the whole journey.</p></div>
-<div class="orb"><div class="ring"></div><div class="sat"></div><div class="mid">one project<br>four stages</div>
-<button class="nd n1" data-p="p1"><b>1</b>Model</button><button class="nd n2" data-p="p2"><b>2</b>Specify</button><button class="nd n3" data-p="p3"><b>3</b>Estimate</button><button class="nd n4" data-p="p4"><b>4</b>Test</button></div>
+<div class="orb"><div class="rp"></div><div class="rp"></div><div class="core">LifeCycle<br>Lab</div>
+<div class="ob">
+<button class="nd" style="left:50%;top:0" data-p="p1"><b>1</b>Model</button>
+<button class="nd" style="left:100%;top:50%" data-p="p2"><b>2</b>Specify</button>
+<button class="nd" style="left:50%;top:100%" data-p="p3"><b>3</b>Estimate</button>
+<button class="nd" style="left:0;top:50%" data-p="p4"><b>4</b>Test</button></div></div>
 </section>
 <div class="why rv"><b>Why I built this.</b> Our lab list had twelve separate experiments. I wanted to see what happens when four of them work together as one tool, in the same order a real project uses them. That journey is the life cycle the name talks about, and the tracker below follows it. The Java version runs in the terminal; this page is the same idea, made for the browser.</div>
 
-<div class="lc rv"><h2>Your project's life cycle</h2><p class="d">Finish each stage in the lab. When all four are done, you can generate a full life cycle report.</p><div class="bar"><i id="lcf"></i></div><div class="lcs" id="lcs"></div><button class="lcbtn" id="rg" disabled>Finish all 4 stages to unlock the report</button><div id="rep"></div></div>
+<div class="lc rv"><h2>Your project's life cycle</h2><p class="d">Finish each stage in the lab. When all four are done, you can generate a full life cycle report.</p><div class="row"><div class="bar"><i id="lcf"></i></div></div><div class="lcs" id="lcs"></div><button class="lcbtn" id="rg" disabled>Finish all 4 stages to unlock the report</button><div id="rep"></div></div>
+
 <div id="tools" class="rv">
-<nav id="tabs">
-<button data-p="p1" class="on">SDLC Models<small>EXP-1</small></button><button data-p="p2">SRS Writer<small>EXP-3</small></button><button data-p="p3">Cost Estimate<small>EXP-5</small></button><button data-p="p4">Input Testing<small>EXP-9</small></button>
-</nav>
+<nav id="tabs"><button data-p="p1" class="on">SDLC Models<small>EXP-1</small></button><button data-p="p2">SRS Writer<small>EXP-3</small></button><button data-p="p3">Cost Estimate<small>EXP-5</small></button><button data-p="p4">Input Testing<small>EXP-9</small></button><div id="ind"></div></nav>
 
 <section id="p1" class="panel on"><h2>SDLC model simulator</h2><p class="d">Pick a model and step through its phases, or let the lab suggest one.</p>
 <div class="row"><label>Requirements<select id="q1"><option value="0">Fixed and clear</option><option value="1">Likely to change</option><option value="2">Not clear yet</option></select></label><label>Delivery<select id="q2"><option value="0">All at the end</option><option value="1">Early and often</option></select></label><button class="alt" id="rcm">Suggest a model</button></div><p class="d" id="rco"></p>
@@ -110,11 +141,11 @@ System calculates fine for late returns</textarea></label></div>
 <p class="err" id="se"></p>
 <div class="row"><button id="sg">Generate SRS</button><button id="sd" class="alt" disabled>Download .txt</button></div><pre id="so" hidden></pre></section>
 
-<section id="p3" class="panel"><h2>COCOMO cost estimate</h2><p class="d">Estimate the effort, time and cost of your project.</p>
-<div class="grid"><label>Size in KLOC (1 to 500)<input id="ck" type="number" value="32"></label>
-<label>Mode<select id="cm"><option value="0">Organic</option><option value="1">Semi-detached</option><option value="2">Embedded</option></select></label>
-<label>Monthly salary per person, Rs (1000 to 500000)<input id="cs" type="number" value="30000"></label></div>
-<button id="cc">Calculate</button><p class="err" id="ce"></p><div class="stats" id="cr"></div><div id="cb"></div></section>
+<section id="p3" class="panel"><h2>COCOMO cost estimate</h2><p class="d">Enter any project size. All three modes are calculated together.</p>
+<div class="grid"><label>Size in KLOC (any value above 0)<input id="ck" type="number" min="0" step="any" value="32"></label>
+<label>Your mode<select id="cm"><option value="0">Organic</option><option value="1">Semi-detached</option><option value="2">Embedded</option></select></label>
+<label>Monthly salary per person, Rs<input id="cs" type="number" min="0" step="any" value="30000"></label></div>
+<button id="cc">Calculate</button><p class="err" id="ce"></p><div class="mcs" id="cr"></div><div id="cb"></div></section>
 
 <section id="p4" class="panel"><h2>Input testing (BVA + ECP)</h2><p class="d">Boundary Value Analysis and Equivalence Class Partitioning, run live.</p>
 <div class="row"><button id="tg">Run marks-to-grade tests (0 to 100)</button></div>
@@ -125,26 +156,37 @@ System calculates fine for late returns</textarea></label></div>
 <footer>LifeCycle Lab &middot; MCA Software Engineering lab project &middot; made by Your Name</footer>
 </main>
 <script>
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-/* title letters rise one by one */
-$('#ttl').innerHTML=[...'LifeCycle Lab'].map((c,i)=>`<span style="animation-delay:${i*55}ms">${c==' '?'&nbsp;':c}</span>`).join('');
-/* soft light follows the pointer (only on devices with a mouse) */
-if(matchMedia('(hover:hover)').matches&&!RM){let q=0;addEventListener('pointermove',e=>{if(q)return;q=requestAnimationFrame(()=>{q=0;document.body.style.setProperty('--x',e.clientX+'px');document.body.style.setProperty('--y',e.clientY+'px')})},{passive:true})}
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],RM=matchMedia('(prefers-reduced-motion:reduce)').matches,HV=matchMedia('(hover:hover)').matches&&!RM,raf=requestAnimationFrame;
+/* floating dots (fewer on phones) */
+if(!RM)$('#dts').innerHTML=Array.from({length:innerWidth<700?7:14},(_,i)=>`<i class="dt" style="left:${(i*37+11)%100}%;--dx:${(i%2?1:-1)*(20+i*7)}px;animation-delay:${-i*1.9}s;animation-duration:${11+i%5*3}s"></i>`).join('');
+/* pointer effects, laptop only: soft light + card tilt, one update per frame */
+if(HV){let ev,q=0,t=null;addEventListener('pointermove',e=>{ev=e;if(q)return;q=raf(()=>{q=0;const s=$('#spot');s.style.opacity=1;s.style.transform=`translate3d(${ev.clientX}px,${ev.clientY}px,0)`;
+const c=ev.target.closest?ev.target.closest('.tl'):null;if(t&&t!==c)t.style.transform='';t=c;
+if(c){const r=c.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width-.5,y=(ev.clientY-r.top)/r.height-.5;c.style.transform=`perspective(700px) rotateX(${-y*6}deg) rotateY(${x*8}deg) translateY(-3px)`}})},{passive:true})}
+/* scroll progress bar */
+let sq=0;addEventListener('scroll',()=>{if(sq)return;sq=raf(()=>{sq=0;const h=document.documentElement.scrollHeight-innerHeight;$('#spr').style.transform='scaleX('+(h>0?scrollY/h:0)+')'})},{passive:true});
 /* reveal on scroll */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});$$('.rv').forEach(e=>io.observe(e));
-/* tabs */
-function go(id){$$('#tabs button,.panel').forEach(x=>x.classList.remove('on'));$('#tabs [data-p='+id+']').classList.add('on');$('#'+id).classList.add('on')}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});$$('.rv').forEach(e=>io.observe(e));
+/* button ripple */
+document.addEventListener('click',e=>{const b=e.target.closest('.panel button,.lcbtn');if(!b||RM)return;const r=b.getBoundingClientRect(),s=document.createElement('span');s.className='rip';s.style.cssText=`left:${e.clientX-r.left-20}px;top:${e.clientY-r.top-20}px`;b.appendChild(s);s.onanimationend=()=>s.remove()});
+/* confetti when all four stages are done */
+function burst(){if(RM)return;const c=['#ffb454','#5eead4','#ff7a90','#ffffff'];for(let i=0;i<30;i++){const d=document.createElement('i');d.className='cf';d.style.cssText=`background:${c[i%4]};--x:${(Math.random()-.5)*Math.min(innerWidth,700)}px;--y:${-120+Math.random()*340}px;--r:${Math.random()*720}deg;animation-delay:${Math.random()*.15}s`;document.body.appendChild(d);setTimeout(()=>d.remove(),1700)}}
+/* tabs with a sliding underline */
+function ind(){const b=$('#tabs .on');if(b)$('#ind').style.transform=`translateX(${b.offsetLeft}px) scaleX(${b.offsetWidth/100})`}
+function go(id){$$('#tabs button,.panel').forEach(x=>x.classList.remove('on'));$('#tabs [data-p='+id+']').classList.add('on');$('#'+id).classList.add('on');ind()}
 $$('#tabs button').forEach(b=>b.onclick=()=>go(b.dataset.p));
 $$('.nd').forEach(b=>b.onclick=()=>{go(b.dataset.p);$('#tools').scrollIntoView({behavior:'smooth'})});
-const flush=f=>requestAnimationFrame(()=>requestAnimationFrame(f));
-function count(el,to,dec){if(RM){el.textContent=to.toLocaleString('en-IN',{maximumFractionDigits:dec});return}let s=null;const f=t=>{s??=t;const p=Math.min((t-s)/800,1);el.textContent=(to*p).toLocaleString('en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec});if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
-/* life cycle tracker: fills up as each stage is completed */
-const S={},ST=[['p1','Model','model'],['p2','Specify','srs'],['p3','Estimate','est'],['p4','Test','test']],esc=x=>String(x).replace(/[&<>]/g,c=>'&#'+c.charCodeAt(0)+';');
+addEventListener('load',ind);addEventListener('resize',ind);ind();
+const flush=f=>raf(()=>raf(f));
+function count(el,to,dec){const o={minimumFractionDigits:dec,maximumFractionDigits:dec};if(RM){el.textContent=to.toLocaleString('en-IN',o);return}let s=null;const f=t=>{s??=t;const p=Math.min((t-s)/800,1);el.textContent=(to*p).toLocaleString('en-IN',o);if(p<1)raf(f)};raf(f)}
+/* life cycle tracker */
+const S={},ST=[['p1','Model','model'],['p2','Specify','srs'],['p3','Estimate','est'],['p4','Test','test']],esc=x=>String(x).replace(/[&<>]/g,c=>'&#'+c.charCodeAt(0)+';');let dn=0;
 function lc(){const n=ST.filter(x=>S[x[2]]).length,b=$('#rg');
-$('#lcs').innerHTML=ST.map((x,i)=>`<button class="lcn ${S[x[2]]?'ok':''}" data-p="${x[0]}"><b>${S[x[2]]?'&#10003;':i+1}</b>${x[1]}<small>${S[x[2]]?esc(S[x[2]].t):'not done yet'}</small></button>`).join('');
+$('#lcs').innerHTML=ST.map((x,i)=>`<button class="lcn tl ${S[x[2]]?'ok':''}" data-p="${x[0]}"><b>${S[x[2]]?'&#10003;':i+1}</b>${x[1]}<small>${S[x[2]]?esc(S[x[2]].t):'not done yet'}</small></button>`).join('');
 $('#lcf').style.transform='scaleX('+n/4+')';$('#lcf').className=n==4?'hi':'';
 $$('#lcs .lcn').forEach(x=>x.onclick=()=>{go(x.dataset.p);$('#tools').scrollIntoView({behavior:'smooth'})});
-b.disabled=n<4;b.textContent=n<4?'Finish all 4 stages to unlock the report ('+n+'/4)':'Generate life cycle report'}
+b.disabled=n<4;b.textContent=n<4?'Finish all 4 stages to unlock the report ('+n+'/4)':'Generate life cycle report';
+if(n==4&&!dn){dn=1;burst()}}
 $('#rg').onclick=()=>{const a=S.model,b=S.srs,c=S.est,t=S.test;
 const r=['LIFECYCLE LAB - PROJECT LIFE CYCLE REPORT','============================================','Date: '+new Date().toISOString().slice(0,10),'','STAGE 1 - MODEL','  Lifecycle model studied : '+a.name,'','STAGE 2 - SPECIFY','  Project                 : '+b.name,'  Functional requirements : '+b.n,'  Intended users          : '+b.users,'','STAGE 3 - ESTIMATE','  Size   : '+c.k+' KLOC ('+c.mode+' mode)','  Effort : '+c.E.toFixed(1)+' person-months','  Time   : '+c.T.toFixed(1)+' months','  Cost   : Rs '+Math.round(c.cost).toLocaleString('en-IN'),'','STAGE 4 - TEST','  Result : '+t.p+' of '+t.n+' tests passed ('+Math.round(t.p/t.n*100)+'%)','','The project was modelled, specified, estimated and tested: one full pass through the early life cycle.'].join('\n');
 const pr=document.createElement('pre'),d=document.createElement('button');pr.textContent=r;d.textContent='Download report';d.className='lcbtn';d.style.marginTop='10px';
@@ -179,21 +221,25 @@ let doc='';
 $('#sg').onclick=()=>{const v=i=>$('#'+i).value.trim(),fr=v('sf').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,10);
 if(!v('sp')||!fr.length){$('#se').textContent='Please enter a project name and at least one functional requirement.';return}$('#se').textContent='';
 doc=['SOFTWARE REQUIREMENTS SPECIFICATION (IEEE format)','==================================================','Project : '+v('sp'),'Author  : '+v('sa'),'Date    : '+new Date().toISOString().slice(0,10),'Version : 1.0','','1. INTRODUCTION','   1.1 Purpose','       '+v('su'),'   1.2 Scope','       '+v('ss'),'   1.3 Definitions','       SRS - Software Requirements Specification','   1.4 References','       IEEE Std 830','','2. OVERALL DESCRIPTION','   2.1 Product Perspective','       '+v('sp')+' is a standalone software system.','   2.2 User Characteristics','       Intended users: '+v('sx'),'   2.3 Assumptions','       Users have basic computer knowledge.','','3. SPECIFIC REQUIREMENTS','   3.1 Functional Requirements',...fr.map((x,i)=>'       FR-'+(i+1)+': '+x),'   3.2 Non-Functional Requirements','       NFR-1 Performance : '+v('n1'),'       NFR-2 Security    : '+v('n2'),'       NFR-3 Usability   : '+v('n3'),'       NFR-4 Reliability : '+v('n4'),'','4. APPENDIX','       (Add diagrams or extra notes here.)'].join('\n');
-S.srs={t:v('sp'),name:v('sp'),n:fr.length,users:v('sx')};lc();const o=$('#so');o.hidden=false;$('#sd').disabled=true;
+S.srs={t:v('sp'),name:v('sp'),n:fr.length,users:v('sx')};lc();
+const o=$('#so');o.hidden=false;$('#sd').disabled=true;
 if(RM){o.textContent=doc;$('#sd').disabled=false;return}
-let i=0;const f=()=>{i=Math.min(i+25,doc.length);o.textContent=doc.slice(0,i);o.scrollTop=o.scrollHeight;i<doc.length?requestAnimationFrame(f):$('#sd').disabled=false};requestAnimationFrame(f)};
+let i=0;const f=()=>{i=Math.min(i+25,doc.length);o.textContent=doc.slice(0,i);o.scrollTop=o.scrollHeight;i<doc.length?raf(f):$('#sd').disabled=false};raf(f)};
 $('#sd').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([doc],{type:'text/plain'}));a.download='SRS_'+$('#sp').value.replace(/[^a-zA-Z0-9]/g,'_')+'.txt';a.click();URL.revokeObjectURL(a.href)};
-/* COCOMO */
-const K=[[2.4,1.05,2.5,.38],[3,1.12,2.5,.35],[3.6,1.2,2.5,.32]],N=['Organic','Semi-detached','Embedded'];
+/* COCOMO: all three modes, no upper limit on size */
+const K=[[2.4,1.05,2.5,.38],[3,1.12,2.5,.35],[3.6,1.2,2.5,.32]],N=['Organic','Semi-detached','Embedded'],fmt=(x,d)=>x.toLocaleString('en-IN',{maximumFractionDigits:d});
 $('#cc').onclick=()=>{const k=+$('#ck').value,m=+$('#cm').value,s=+$('#cs').value,e=$('#ce');
-if(!(k>=1&&k<=500)){e.textContent='Size must be between 1 and 500 KLOC.';return}
-if(!(s>=1000&&s<=500000)){e.textContent='Salary must be between 1,000 and 500,000.';return}
-e.textContent='';const ef=K.map(c=>c[0]*Math.pow(k,c[1])),E=ef[m],T=K[m][2]*Math.pow(E,K[m][3]);S.est={t:E.toFixed(0)+' person-months',E,T,k,mode:N[m],cost:E*s};lc();
-$('#cr').innerHTML=[['Effort (person-months)','e1'],['Time (months)','e2'],['Average team size','e3'],['Cost (Rs)','e4']].map((x,i)=>`<div class="stat" style="animation-delay:${i*90}ms"><span>${x[0]}</span><b id="${x[1]}">0</b></div>`).join('');
-count($('#e1'),E,1);count($('#e2'),T,1);count($('#e3'),E/T,1);count($('#e4'),E*s,0);
-const mx=Math.max(...ef);$('#cb').innerHTML='<p class="d">Effort for the same size in each mode:</p>'+ef.map((x,i)=>`<div class="brow"><span>${N[i]}</span><div class="bar"><i class="${i==m?'hi':''}" data-w="${x/mx}"></i></div><em>${x.toFixed(0)} PM</em></div>`).join('');
+if(!(k>0&&isFinite(k))){e.textContent='Enter a size greater than 0 KLOC.';return}
+if(!(s>0&&isFinite(s))){e.textContent='Enter a salary greater than 0.';return}
+const R=K.map(c=>{const E=c[0]*Math.pow(k,c[1]),T=c[2]*Math.pow(E,c[3]);return{E,T,P:E/T,C:E*s}});
+if(!R.every(r=>isFinite(r.C))){e.textContent='That size is too large to calculate.';return}
+e.textContent='';const X=R[m];S.est={t:fmt(X.E,0)+' person-months',E:X.E,T:X.T,k,mode:N[m],cost:X.C};lc();
+$('#cr').innerHTML=R.map((r,i)=>`<div class="mc tl ${i==m?'sel':''}" style="animation-delay:${i*110}ms"><h3>${N[i]}${i==m?'<em>your choice</em>':''}</h3>${[['Effort','E',1,'person-months'],['Time','T',1,'months'],['Team size','P',1,'persons'],['Cost','C',0,'Rs']].map(x=>`<p><span>${x[0]}</span><b data-v="${r[x[1]]}" data-d="${x[2]}">0</b> <small>${x[3]}</small></p>`).join('')}</div>`).join('');
+$$('#cr [data-v]').forEach(el=>count(el,+el.dataset.v,+el.dataset.d));
+const bars=(t,key,u)=>{const mx=Math.max(...R.map(r=>r[key]));return `<p class="d">${t}</p>`+R.map((r,i)=>`<div class="brow"><span>${N[i]}</span><div class="bar"><i class="${i==m?'hi':''}" data-w="${r[key]/mx}"></i></div><em>${fmt(r[key],0)} ${u}</em></div>`).join('')};
+$('#cb').innerHTML=bars('Effort in each mode','E','PM')+bars('Development time in each mode','T','months');
 flush(()=>$$('#cb i').forEach(i=>i.style.transform='scaleX('+i.dataset.w+')'))};
-/* Black-box */
+/* Black-box testing */
 const grade=m=>m<0||m>100?'Invalid':m>=90?'A+':m>=80?'A':m>=70?'B':m>=60?'C':m>=50?'D':m>=40?'E':'F';
 function runT(rows){let p=0,h='<tr><th>Technique</th><th>Input</th><th>Expected</th><th>Actual</th><th>Result</th></tr>';
 rows.forEach((r,i)=>{const ok=r[3]==r[2];p+=ok;h+=`<tr class="in" style="animation-delay:${i*45}ms"><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td class="${ok?'ps':'fl'}">${ok?'PASS':'FAIL'}</td></tr>`});
